@@ -8,3 +8,10 @@ spring:
     active: local
   jpa:
     open-in-view: false
+  messages:
+    basename: messages/messages
+    encoding: UTF-8
+    cacheDuration: 3
+    alwaysUseMessageFormat: true
+    useCodeAsDefaultMessage: true
+    fallbackToSystemLocale: true
