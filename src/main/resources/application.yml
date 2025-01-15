@@ -8,6 +8,10 @@ spring:
     active: local
   jpa:
     open-in-view: false
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
   messages:
     basename: messages/messages
     encoding: UTF-8
@@ -15,3 +19,7 @@ spring:
     alwaysUseMessageFormat: true
     useCodeAsDefaultMessage: true
     fallbackToSystemLocale: true
+  kafka:
+    producer:
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer

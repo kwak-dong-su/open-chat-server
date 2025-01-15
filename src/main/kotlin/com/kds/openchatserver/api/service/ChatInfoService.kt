@@ -10,4 +10,5 @@ interface ChatInfoService {
     fun create(name: String, userId: UUID): ChatInfoEntity
     fun increase(id: UUID): ChatInfoEntity
     fun decrease(id: UUID): ChatInfoEntity
+    fun publish(id: UUID, userName: String, message: String): Boolean
 }
