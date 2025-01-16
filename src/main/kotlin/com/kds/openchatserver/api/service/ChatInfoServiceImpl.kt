@@ -1,5 +1,6 @@
 package com.kds.openchatserver.api.service
 
+import com.kds.openchatserver.api.constants.ChatStatus
 import com.kds.openchatserver.api.constants.messages.ErrorMessage
 import com.kds.openchatserver.api.domain.entity.ChatInfoEntity
 import com.kds.openchatserver.api.domain.vo.ChatVO
@@ -37,9 +38,10 @@ class ChatInfoServiceImpl(
         TODO("Not yet implemented")
     }
 
-    override fun publish(id: UUID, userName: String, message: String): Boolean =
-        getChatInfo(id).run {
-            kafkaService.send(this.id.toString(), ChatVO(userName, message))
-            return true
-        }
+    override fun publish(id: UUID, userName: String, message: String): Boolean {
+        val chat = chatInfoRepository.findByIdAndStatus(id, ChatStatus.OPEN)
+            ?: throw NotFoundException(ErrorMessage.UNKNOWN)
+        kafkaService.send(chat.id.toString(), ChatVO(userName, message))
+        return true
+    }
 }
