@@ -2,6 +2,7 @@ package com.kds.openchatserver.api.service.kafka
 
 import com.kds.openchatserver.api.domain.request.ChatRequest
 import com.kds.openchatserver.api.domain.vo.ChatVO
+import com.kds.openchatserver.utils.log
 import org.springframework.kafka.annotation.KafkaListener
 import org.springframework.kafka.core.KafkaTemplate
 import org.springframework.kafka.support.KafkaHeaders
@@ -18,7 +19,7 @@ class KafkaServiceImpl(
 
     override fun send(topic: String, message: ChatVO) {
         kafkaTemplate.send(topic, message)
-        println("Sent message: $message")
+        log().info("Sent message: $message")
     }
 
     override fun send(chatId: UUID, request: ChatRequest) =
@@ -26,8 +27,7 @@ class KafkaServiceImpl(
 
     @KafkaListener(topicPattern = ".*", groupId = "chat")
     override fun listenAll(@Header(value = KafkaHeaders.RECEIVED_TOPIC) topic: String, message: ChatVO) {
-        println("Received messages from topic $topic")
-        println("Received message: $message")
+        log().info("Received messages from topic $topic, Received message: $message")
         messagingTemplate.convertAndSend("/sub/${topic}", message)
     }
 }
