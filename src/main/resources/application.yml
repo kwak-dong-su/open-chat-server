@@ -25,3 +25,7 @@ spring:
       group-id: chat
     producer:
       bootstrap-servers:
+
+translation:
+  server:
+    url:
