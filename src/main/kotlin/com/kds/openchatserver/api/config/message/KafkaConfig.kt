@@ -1,6 +1,6 @@
 package com.kds.openchatserver.api.config.message
 
-import com.kds.openchatserver.api.domain.vo.ChatVO
+import com.kds.openchatserver.api.domain.vo.TranslationVO
 import org.apache.kafka.clients.consumer.ConsumerConfig
 import org.apache.kafka.clients.producer.ProducerConfig
 import org.apache.kafka.common.serialization.StringDeserializer
@@ -52,8 +52,8 @@ class KafkaConfig {
     fun kafkaTemplate(): KafkaTemplate<String, Any> = KafkaTemplate(producerFactory())
 
     @Bean
-    fun kafkaListenerContainerFactory(): ConcurrentKafkaListenerContainerFactory<String, ChatVO> =
-        ConcurrentKafkaListenerContainerFactory<String, ChatVO>().also {
+    fun kafkaListenerContainerFactory(): ConcurrentKafkaListenerContainerFactory<String, TranslationVO> =
+        ConcurrentKafkaListenerContainerFactory<String, TranslationVO>().also {
             it.consumerFactory = consumerFactory()
             it.containerProperties.isMissingTopicsFatal = false
         }
